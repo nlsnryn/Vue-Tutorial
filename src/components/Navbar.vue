@@ -2,8 +2,8 @@
   <nav
     :class="['navbar', 'navbar-expand-lg', `navbar-${theme}`, `bg-${theme}`]"
   >
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+    <div class="container">
+      <a class="navbar-brand font-weight-bold" href="#">MyVue</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -17,17 +17,15 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul id="links" class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li v-for="(page, index) in pages" class="nav-item" :key="index">
-            <a
-              class="nav-link"
-              :class="{ active: pageIndex == index }"
-              aria-current="page"
-              :href="page.link.url"
-              :title="`The link is goes to ${page.link.navTitle} page`"
-              @click.prevent="clickNavbar(index)"
-              >{{ page.link.navTitle }}</a
-            >
-          </li>
+          <navbar-link
+            v-for="(page, index) in publishedPages"
+            class="nav-item"
+            :key="index"
+            :index="index"
+            :page="page"
+            :isActive="pageIndex == index"
+            @navbar-link="navbarLink"
+          ></navbar-link>
         </ul>
         <div class="d-flex">
           <button class="btn btn-primary" @click.prevent="changeThemeColor()">
@@ -40,9 +38,21 @@
 </template>
 
 <script>
-export default {
-  props: ["pages", "pageIndex", "clickNavbar"],
+import NavbarLink from "./NavbarLink.vue";
 
+export default {
+  components: {
+    NavbarLink,
+  },
+  computed: {
+    publishedPages() {
+      return this.pages.filter((p) => p.published);
+    },
+  },
+  props: ["pages", "pageIndex", "navbarLink"],
+  created() {
+    this.getThemeSettings();
+  },
   data() {
     return {
       theme: "light",
@@ -57,6 +67,17 @@ export default {
       }
 
       this.theme = theme;
+      this.setThemeSettings();
+    },
+    setThemeSettings() {
+      localStorage.setItem("theme", this.theme);
+    },
+    getThemeSettings() {
+      let theme = localStorage.getItem("theme");
+
+      if (theme) {
+        this.theme = theme;
+      }
     },
   },
 };

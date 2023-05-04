@@ -1,0 +1,29 @@
+[
+  {
+    "link": {
+      "title": "Home",
+      "url": "index.html"
+    },
+    "pageTitle": "Hello, Home",
+    "content": "Welcome to the world of Vue and Laravel",
+    "published": true
+  },
+  {
+    "link": {
+      "title": "About",
+      "url": "about.html"
+    },
+    "pageTitle": "Hello, About",
+    "content": "Welcome to the world of Vue and Laravel",
+    "published": true
+  },
+  {
+    "link": {
+      "title": "Contact",
+      "url": "contact.html"
+    },
+    "pageTitle": "Hello, Contact",
+    "content": "Welcome to the world of Vue and Laravels",
+    "published": true
+  }
+]
